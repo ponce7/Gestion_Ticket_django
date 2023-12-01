@@ -1,0 +1,20 @@
+{% extends 'registrations/base.html' %}
+
+{% block content %}
+
+<h2>Commande</h2>
+
+<form action="" method="post" enctype="multipart/form-data" class="form-group">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <p>
+            <label>Slug</label>
+            <input type="text" value="{{ events }}">
+        <p>
+       
+    
+    <button type="submit">Passer commande</button>
+</form>
+
+
+{% endblock content %}

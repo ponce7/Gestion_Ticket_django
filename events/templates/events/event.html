@@ -1,0 +1,31 @@
+{% extends 'registrations/base.html' %}
+
+{% block content %}
+
+<h2>Ajouter un evenement</h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+      {% comment %} <p>
+        <label for="nom">Nom</label>
+        <input id="nom" type="text" name="nom">
+    </p>
+    <p>
+        <label for="lieu">Lieu</label>
+        <input id="lieu" type="text" name="lieu">
+    </p>
+    <p>
+        <label for="temps">Date et Heure</label>
+        <input id="temps" type="datetime-local" name="temps">
+    </p>
+    <p>
+        <label for="nbr_ticket">Nombre de tickets dispo</label>
+        <input id="nbr_ticket" type="text" name="nbr_ticket">
+    </p>   {% endcomment %}
+        {{ form.as_p }}
+  
+    <button type="submit">Publier</button>
+</form>
+
+
+{% endblock content %}

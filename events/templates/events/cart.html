@@ -1,0 +1,19 @@
+{% block content %}
+
+    {% for order in orders %}
+    <h2>{{ order.event.name }}</h2>
+    <p>{{ order.quantity }} Ticket(s) achete </p>
+    {% comment %} <a href="{% url 'delete-cart' %}">Annuler l'achat</a> {% endcomment %}
+    {% endfor %}
+    
+    <h2>Entrez votre adresse electronique</h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+     
+        {{ form.as_p }}
+  
+    <button type="submit">Valider la commande</button>
+</form>
+
+{% endblock %}
