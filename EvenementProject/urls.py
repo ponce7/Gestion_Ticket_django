@@ -16,16 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from accounts.views import signup, login
-from events.views import index, add_event, cart, commande
+from accounts.views import signup, connexion, deconnexion
+from events.views import index, add_event, commande, pdf
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', login, name="login"),
-    path('signup/', signup, name="signup"),
+    path('accounts/login/', connexion, name="connexion"),
+    path('accounts/logout/', deconnexion, name="deconnexion"),
+    path('accounts/signup/', signup, name="signup"),
     path('index/', index, name="index"),
     path('event/', add_event, name="add_event"),
-    path('cart/', cart, name="cart"),
+    path('pdf/', pdf, name="pdf"),
     # path('event/<str:slug>/add-to-cart/', add_to_cart, name="add_to_cart"),
-    path('commande/<str:slug>/', commande, name="commande")
-]
+    path('commande/<int:id>/', commande, name="commande"),
+    # path('page_convert/<int:id>/', render_pdf_view, name='render_pdf_view')
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

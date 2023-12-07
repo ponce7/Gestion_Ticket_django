@@ -1,28 +1,26 @@
-{% extends 'registrations/base.html' %} 
+{% extends 'base.html' %} 
+{% load static %}
 
 {% block content %}
 
 <div class="container">
     <div class="row">
         {% for event in events %}
-          <div class="col-sm-4">
-              <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-1.jpg');">
+          <div class="col-sm-4 mb-3">
+              <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url({% static '/img/ticket.png' %});">
                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                   <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><p>{{ event.name }}</p></h3>
                   <ul class="d-flex list-unstyled mt-auto">
-                    <li class="me-auto">
-                      <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
-                    </li>
                     <li class="d-flex align-items-center me-3">
-                      <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                      <span><i class="bi bi-geo-alt"></i></span>
                       <small>{{ event.lieu}}</small>
                     </li>
                     <li class="d-flex align-items-center">
-                      <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                      <span><i class="bi bi-calendar-event"></i></span>
                       <small>{{ event.event_date }}</small>
                         
                               <p class="text-center"> 
-                                  <a href="{% url 'commande' event.slug %}"> Buy ticket</a>
+                                  <a href="{% url 'commande' event.id %}" type="button" class="btn btn-primary">Payer</a>
                               </p> 
                           
                     </li>

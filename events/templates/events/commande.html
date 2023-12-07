@@ -1,20 +1,31 @@
-{% extends 'registrations/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
-<h2>Commande</h2>
-
-<form action="" method="post" enctype="multipart/form-data" class="form-group">
-    {% csrf_token %}
-        {{ form.as_p }}
-        <p>
-            <label>Slug</label>
-            <input type="text" value="{{ events }}">
-        <p>
-       
-    
-    <button type="submit">Passer commande</button>
-</form>
-
+<div class="container-fluid" >
+    <div class="row">
+        <div class="col-lg-4">
+           
+        </div>
+        <div class="col-lg-4 px-5 py-3" style="background-color: beige; border-radius: 15px; padding-right: -50px;">
+            <h2 style="padding-left: 85px;">Commande</h2>
+            <p class="text-danger">{{ message }}</p> 
+            <p>{{ elmt }}</p>
+            <form action="" method="post" enctype="multipart/form-data" class="form-group py-3" style="padding-left: 80px;">
+                {% csrf_token %}
+            
+                <label>Adresse Email</label>
+                    <p>{{form.email}}</p>
+                <label>Quantite</label>
+                    <p>{{form.qte}}</p>
+                
+                <button type="submit" class="btn btn-primary" style="margin-left:20px;">Passer commande</button>
+            </form>
+        </div>
+        <div class="col-lg-4">
+           
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
