@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from accounts.views import signup, connexion, deconnexion
-from events.views import index, add_event, commande, pdf
+from events.views import generateQrCode,index, add_event, commande, pdf
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -34,5 +34,5 @@ urlpatterns = [
     # path('event/<str:slug>/add-to-cart/', add_to_cart, name="add_to_cart"),
     path('commande/<int:id>/', commande, name="commande"),
     # path('page_convert/<int:id>/', render_pdf_view, name='render_pdf_view')
-
+    # path('home/', generateQrCode, name="home"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,7 +6,7 @@ from events.models import Event, Recevoir
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ('name', 'lieu', 'event_date', 'nbr_ticket')
+        fields = ('name', 'lieu', 'event_date', 'event_photo', 'nbr_ticket')
 
 
 class RecevoirForm(forms.ModelForm):

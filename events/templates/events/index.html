@@ -2,14 +2,28 @@
 {% load static %}
 
 {% block content %}
-
-<div class="container">
+<div class="container-fluid">
+  <div class="row">
+    
+    <div class="col-lg-6">
+      <h5>Les evenements recents</h5>
+      <p>Des evenements qui s'organisent pres de chez vous</p>
+    </div>
+    <div class="col-lg-6">
+      <img src="{% static '/img/img-entete.jpg' %}" id="img-entete">
+    </div>
+    
+  </div>
+</div>
+<div class="container-fluid mt-5">
+  
     <div class="row">
         {% for event in events %}
-          <div class="col-sm-4 mb-3">
-              <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url({% static '/img/ticket.png' %});">
-                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                  <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><p>{{ event.name }}</p></h3>
+          <div class="col-sm-3 mb-3">
+              <div  class="card card-cover h-100 overflow-hidden text-bg-white rounded-4 shadow-lg">
+                <img src=/{{event.event_photo}} alt="img" srcset="" id='img-background'>
+                <div class="d-flex flex-column  p-5 pb-3 text-dark text-shadow-1">
+                  <h6 class="mb-2  lh-1 fw-bold">{{ event.name }}</h6>
                   <ul class="d-flex list-unstyled mt-auto">
                     <li class="d-flex align-items-center me-3">
                       <span><i class="bi bi-geo-alt"></i></span>
@@ -30,9 +44,10 @@
             </div>
         {% endfor %}  
             </div>
-
       
     </div>
   
 </div>
+
+
 {% endblock %}

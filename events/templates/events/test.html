@@ -43,15 +43,9 @@
 </head>
 <body>
     {% block content %}
-    <h1 class="text-center">Ticket info</h1>
-   
-            <p class="text-center">{{ events.name}}</p>
-            <p class="text-center">Lieu: {{ events.lieu}}</p>
-            <p class="text-center"> Date et heure: {{ events.event_date }}</p>
-          </tr>
-        </tbody>
-      </table>
-    
-        {% endblock content%}
+      <div class="container-fluid text-center text-info" >
+          <p style="margin-top: 250px;">Consulter votre boite email pour recevoir votre ticket</p>
+      </div>
+    {% endblock content%}
     </body>
 </html>
