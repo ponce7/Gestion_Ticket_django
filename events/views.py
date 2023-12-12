@@ -41,6 +41,7 @@ from unittest import result
 # Create your views here.
 def index(request):
     events = Event.objects.all()
+   
     return render(request, "events/index.html", context={'events': events})
 
 @login_required
@@ -50,9 +51,10 @@ def add_event(request):
                 lieu = request.POST.get("lieu")
                 event_date = request.POST.get("event_date")
                 nbr_ticket = request.POST.get("nbr_ticket")
+                price = request.POST.get("price")
                 if len(request.FILES) != 0:
                     event_photo = request.FILES["event_photo"]
-                Event.objects.create(name=name, lieu=lieu, event_date=event_date, event_photo=event_photo, nbr_ticket=nbr_ticket)
+                Event.objects.create(name=name, lieu=lieu, event_date=event_date, event_photo=event_photo, nbr_ticket=nbr_ticket, price=price)
                 return redirect("index")
         else:
             return render(request, 'events/event.html')
@@ -66,51 +68,54 @@ def commande(request, id):
    
     # order = Order.objects.get_or_create(event=event) 
     if request.method == "POST":
-        form = RecevoirForm(request.POST)
+        qte = request.POST.get("qte")
+        email = request.POST.get("email")
         elmt = int(request.POST['qte'])
+        nbr_email = int(request.POST.get('qte'))
+        product.nbr_ticket = product.nbr_ticket - int(request.POST['qte'])
+        product.save()
+            
+        Recevoir.objects.create(email=email, qte=qte)
+        
+       
         if (elmt > event.nbr_ticket):
             message ="Attention passez une commande en dessous de ce nombre."
-            return render(request, 'events\commande.html' , {'message':message, 'form': RecevoirForm})
+            return render(request, 'events\commande.html' , {'message':message})
         
         if (elmt < 0):
             message ="Attention pas de commande inférieur à 0 ."
-            return render(request, 'events\commande.html' , {'message':message, 'form': RecevoirForm})
-        
-        if form.is_valid:
-            product.nbr_ticket = product.nbr_ticket - int(request.POST['qte'])
-            product.save()
-            form.save()
+            return render(request, 'events\commande.html' , {'message':message})
 
-
-            #Envoie de mail
+        #Envoie de mail
+        cpt = 0
+        while cpt < nbr_email:
             subject = "Bon d'achat ticket"
             message_contenu = "PDF contenu"
             from_email = settings.EMAIL_HOST_USER
             recipient_list = request.POST.get('email')
             mail = EmailMessage(subject, message_contenu, from_email, [recipient_list])
-           
+        
             context = {
-                     'events':events,
+                    'events':events,
                         'obj': generateQrCode("http://127.0.0.1:8000/pdf/")
-                      
+                    
                 }
             pdf_var = html2pdf("events/pdf.html",context)
-            filename = 'ticket.pdf'
-            nbr_email = int(request.POST.get('qte'))
-            i = 0
-            while i < nbr_email:
-                mail.attach(filename, pdf_var, 'application/pdf')
-                i += 1 
-                mail.send()
-               
+            filename = event.name + ".pdf"
+            
+            
+            mail.attach(filename, pdf_var, 'application/pdf') 
+            cpt = cpt+1    
+            mail.send()
+            
             return render(request,'events/test.html', {'events':events})
         
         else:
-            return render(request, 'events/commande.html', {'form': RecevoirForm , 'events': events})
-    return render(request, 'events/commande.html', {'form': RecevoirForm, 'events':events})
+            return render(request, 'events/commande.html', { 'events': events})
+    return render(request, 'events/commande.html', { 'events':events})
 
-def pdf(request):
-    events = Event.objects.get(id=7)
+def pdf(request, id):
+    events = Event.objects.get(id=id)
     context = {
         'events':events,
         'obj': generateQrCode("http://127.0.0.1:8000/pdf/"),

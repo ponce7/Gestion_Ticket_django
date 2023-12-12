@@ -14,8 +14,10 @@ class Event(models.Model):
     lieu = models.CharField(max_length=128)
     event_date = models.DateTimeField()
     event_photo = models.ImageField(upload_to="image/")
-    nbr_ticket = models.IntegerField(default=0)
+    nbr_ticket = models.IntegerField(default=1)
+    price = models.IntegerField()
     slug = models.SlugField(max_length=128)
+    
 
     def __str__(self):
         return self.name

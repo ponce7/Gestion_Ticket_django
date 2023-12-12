@@ -36,33 +36,36 @@
 
 </head>
 <body >
+      
     {% block content %}
     
-      <div style="border: 1px solid black; margin: 10px;">
-        <table class=" caption-top" >
-          <caption style="border: none;">INFO TICKET</caption>
-          <thead class="table-light">
-            <tr>
-              <th scope="col">ID TICKET#</th>
-              <td>{{events.id}}</td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="col">NOM EVENEMENT</th>
-              <td>{{events.name}}</td>
-              <td><img width="100" height="100" src="data:image/png;base64,{{ obj }}" alt="QR code"></td>
-            </tr>
-            <tr>
-              <th scope="col">DATE ET HEURE</th>
-              <td>{{events.event_date}}</td>
-            </tr>
-            <tr>
-              <th scope="col">LIEU</th>
-              <td>{{events.lieu}}</td>
-            </tr>
-          </thead>
-        </table>
-      </div>
+      
+        <div>
+          <table class=" caption-top" >
+            <caption style="border: none;">INFO TICKET</caption>
+            <thead class="table-light">
+              <tr>
+                <th scope="col">ID TICKET#</th>
+                <td>{{events.id}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="col">NOM EVENEMENT</th>
+                <td>{{events.name}}</td>
+                <td><img width="100" height="100" src="data:image/png;base64,{{ obj }}" alt="QR code"></td>
+              </tr>
+              <tr>
+                <th scope="col">DATE ET HEURE</th>
+                <td>{{events.event_date}}</td>
+              </tr>
+              <tr>
+                <th scope="col">LIEU</th>
+                <td>{{events.lieu}}</td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      
     {% endblock content%}
     </body>
 </html>

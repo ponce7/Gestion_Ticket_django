@@ -12,5 +12,23 @@
  
  #img-background {
     border-radius: 5px 5px 0px 0px;
-    height: 120px!important; 
+    height: 260px!important; 
+}
+
+
+
+
+/********* FOOTER  **************/
+
+/*********      *****************/
+
+
+#footer{
+    background-color: rgb(18, 54, 54);
+    color:white;
+    height: 200px;
+    padding: 70px;
+    text-align: center;
+    
+    
 }
