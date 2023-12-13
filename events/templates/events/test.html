@@ -44,8 +44,12 @@
 <body>
     {% block content %}
       <div class="container-fluid text-center text-info" >
-          <p style="margin-top: 250px;">Consulter votre boite email pour recevoir votre ticket</p>
+          <p style="margin-top: 250px; font-size: 20px;">Consulter votre boite email pour recevoir votre ticket</p>
       </div>
+
+      <div>
+        <a href="{% url 'index' %}" class="btn btn-primary  mt-5 px-5 text-uppercase" style="margin-left:20px;">Voir d'autres événements</a>
+    </div>
     {% endblock content%}
     </body>
 </html>

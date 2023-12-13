@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-4 offset-4" style="background-color: beige; border-radius: 15px;">
-            <h1 class="text-center px-4 py-5">Creer un évenement</h1>
-            <form method="post" class="px-4 py-5" enctype="multipart/form-data">
+        <div class="col-sm-4 offset-4 mt-4" style="background-color: beige; border-radius: 15px;">
+            <h1 class="text-center px-4 py-2">Creer un évenement</h1>
+            <form method="post" class="px-4 py-2" enctype="multipart/form-data">
                 {% csrf_token %}
               <div class="mb-3">
                 <label for="nom" class="form-label">Nom </label>
@@ -17,7 +17,8 @@
               </div>
               <div class="mb-3">
                 <label for="exampleDropdownFormPassword1" class="form-label">Date et Heure</label>
-                <input type="datetime-local" class="form-control" id="event_date" placeholder="Cotonou" name="event_date">
+                <input type="datetime-local" class="form-control" id="event_date" placeholder="Cotonou" name="event_date" min="2023-12-13">
+                <p class="text-danger">{{message}}</p>
               </div>
               <div class="mb-3">
                 <label for="exampleDropdownFormPassword1" class="form-label">Photo</label>
@@ -27,7 +28,11 @@
                 <label for="nbr_ticket" class="form-label">Nombre de ticket(s)</label>
                 <input type="number" minlength="1" class="form-control" id="nombreTicket" placeholder="" name="nbr_ticket">
               </div>
-              <button type="submit" class="btn btn-primary">Publier</button>
+              <div class="mb-3">
+                <label for="nbr_ticket" class="form-label">Prix</label>
+                <input type="number" minlength="1" class="form-control" id="price" placeholder="" name="price">
+              </div>
+              <button type="submit" class="btn btn-primary px-5 text-uppercase" style="margin-left:70px;">Metre en ligne</button>
             </form>
         </div>
     </div>

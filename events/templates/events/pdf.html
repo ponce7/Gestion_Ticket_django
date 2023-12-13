@@ -35,11 +35,21 @@
       
 
 </head>
+<style>
+
+  div{
+    border: 1px solid black;
+  }
+  table{
+    background-color: darkgray;
+  }
+</style>
 <body >
       
     {% block content %}
     
-      
+      {% for i in qte %}
+     
         <div>
           <table class=" caption-top" >
             <caption style="border: none;">INFO TICKET</caption>
@@ -65,7 +75,7 @@
             </thead>
           </table>
         </div>
-      
+      {% endfor %}
     {% endblock content%}
     </body>
 </html>

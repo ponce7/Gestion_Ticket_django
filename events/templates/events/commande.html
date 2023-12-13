@@ -6,50 +6,35 @@
 <div class="container-fluid" >
     <div class="row">
         <div class="col-lg-6 mt-5">
-            <h1 class="text-primary">{{events.name}}</h2>
-            <h4 class="text-warning">Nombre de ticket(s) disponible</h4>
+            <h1 class="text-primary text-uppercase">{{events.name}}</h2>
+            <h4 class="text-warning text-uppercase">Nombre de ticket(s) disponible</h4>
             
                         <p class="mb-4">{{events.nbr_ticket}} ticket(s) restant(s)</p>
-            <h4 class="text-warning">Information sur l'evenement</h4>
+            <h4 class="text-warning text-uppercase">Information sur l'evenement</h4>
                 <span class="mx-2"><i class="bi bi-geo-alt"></i>{{events.lieu}}</span>
                 <span><i class="bi bi-calendar-event"></i>{{events.event_date}}</span>
-                <p class="mx-5 mt-4">{{events.price}} FCFA</p>
 
                 <div>
-                    <a href="{% url 'index' %}" class="btn btn-primary mt-5" style="margin-left:20px;">Voir d'autres événements</a>
+                    <a href="{% url 'index' %}" class="btn btn-primary mt-5 text-uppercase" style="margin-left:20px;">Voir d'autres événements</a>
                 </div>
             
         </div>
-        <div class="col-lg-6 px-5 py-3 mt-5" style="background-color: beige; border-radius: 15px; padding-right: -50px;">
-            <h2 style="padding-left: 85px;">Commande 
+        <div class="col-lg-6 mt-5 px-5 py-3" style="background-color: beige; border-radius: 15px; padding-right: -50px;">
+            <h2 style="padding-left: 80px; " class="text-uppercase text-warning">
+                Commande 
                 
             </h2>
             <p class="text-danger">{{ message }}</p> 
             <p>{{ elmt }}</p>
             <form action="" method="post" enctype="multipart/form-data" class="form-group py-3" style="padding-left: 80px;">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label for="nom" class="form-label">Email </label>
-                    <input type="email" class="form-control" id="email" placeholder="nom@gmail.com" name="email" required>
-                </div>
-               
-                <div class="mb-3">
-                    <label for="nom" class="form-label">Quantite </label>
-                    <input type="text" class="form-control" id="qte"  name="qte" required>
-                </div>
-
-                {% comment %} <div class="mb-3">
-                    <label for="nom" class="form-label">Prix Unit </label>
-                    <input type="text" class="form-control" id="price_unit" value="" placeholder="{{events.price}}" name="price_unit">
-                </div> {% endcomment %}
-
-                {% comment %} <div class="mb-3">
-                    <label for="nom" class="form-label">Prix net</label>
-                    <input type="number" class="form-control" id="price_net" value="{{price_net}}"  name="price_net">
-                </div>
-                {% endcomment %}
+            
+                <label>Adresse Email</label>
+                    <p>{{form.email}}</p>
+                <label>Quantite</label>
+                    <p>{{form.qte}}</p>
                 
-                <button type="submit" class="btn btn-primary" style="margin-left:20px;">Passer commande</button>
+                <button type="submit" class="btn btn-primary text-uppercase px-3" style="margin-left:5px;">Passer commande</button>
             </form>
         </div>
     </div>

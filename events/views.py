@@ -1,12 +1,13 @@
 import base64
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from django.urls import reverse
-from events.models import *
+from .models import *
 from django.contrib.auth.decorators import login_required
-from events.forms import *
+from .forms import *
 
-
+from django.utils import timezone
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -52,9 +53,17 @@ def add_event(request):
                 event_date = request.POST.get("event_date")
                 nbr_ticket = request.POST.get("nbr_ticket")
                 price = request.POST.get("price")
+              
+                if datetime.strptime(event_date, "%Y-%m-%dT%H:%M") <= datetime.now():
+                    message = "La date ou l'heure ne doivent pas etre anterieur a la date d'aujourd'hui."
+                    return render(request, 'events/event.html', {'message':message})
                 if len(request.FILES) != 0:
                     event_photo = request.FILES["event_photo"]
-                Event.objects.create(name=name, lieu=lieu, event_date=event_date, event_photo=event_photo, nbr_ticket=nbr_ticket, price=price)
+
+                else:
+                     return render(request, 'events/event.html') 
+                my_event=Event.objects.create(name=name, lieu=lieu, event_date=event_date, event_photo=event_photo, nbr_ticket=nbr_ticket, price=price)
+                my_event.save()
                 return redirect("index")
         else:
             return render(request, 'events/event.html')
@@ -66,29 +75,34 @@ def commande(request, id):
     
     product = Event.objects.get(id=id)
    
-    # order = Order.objects.get_or_create(event=event) 
+    
     if request.method == "POST":
         qte = request.POST.get("qte")
         email = request.POST.get("email")
+        form = RecevoirForm(request.POST)
         elmt = int(request.POST['qte'])
-        nbr_email = int(request.POST.get('qte'))
-        product.nbr_ticket = product.nbr_ticket - int(request.POST['qte'])
-        product.save()
-            
-        Recevoir.objects.create(email=email, qte=qte)
-        
        
         if (elmt > event.nbr_ticket):
             message ="Attention passez une commande en dessous de ce nombre."
-            return render(request, 'events\commande.html' , {'message':message})
+            return render(request, 'events\commande.html' , {'message':message, 'form': RecevoirForm, 'events': events})
         
         if (elmt < 0):
             message ="Attention pas de commande inférieur à 0 ."
-            return render(request, 'events\commande.html' , {'message':message})
+            return render(request, 'events\commande.html' , {'message':message, 'form': RecevoirForm, 'events': events})
+        
+        if form.is_valid:
+            product.nbr_ticket = product.nbr_ticket - int(request.POST['qte'])
+            product.save()
+            form.save()
 
-        #Envoie de mail
-        cpt = 0
-        while cpt < nbr_email:
+
+            #Envoie de mail
+            nbr_email = int(request.POST.get('qte'))
+            #Create list for multiplicate email
+            crt_liste = []
+            for _ in range(nbr_email):
+                crt_liste.append(0)
+
             subject = "Bon d'achat ticket"
             message_contenu = "PDF contenu"
             from_email = settings.EMAIL_HOST_USER
@@ -97,22 +111,23 @@ def commande(request, id):
         
             context = {
                     'events':events,
-                        'obj': generateQrCode("http://127.0.0.1:8000/pdf/")
+                    'qte':crt_liste,
+                    'obj': generateQrCode("http://127.0.0.1:8000/pdf/")
                     
                 }
             pdf_var = html2pdf("events/pdf.html",context)
             filename = event.name + ".pdf"
-            
-            
+                
             mail.attach(filename, pdf_var, 'application/pdf') 
-            cpt = cpt+1    
-            mail.send()
+                
             
-            return render(request,'events/test.html', {'events':events})
+            
+            mail.send()
+            return render(request,'events/test.html', {'events':events, 'qte':range(nbr_email)})
         
         else:
-            return render(request, 'events/commande.html', { 'events': events})
-    return render(request, 'events/commande.html', { 'events':events})
+            return render(request, 'events/commande.html', {'form': RecevoirForm , 'events': events})
+    return render(request, 'events/commande.html', {'form': RecevoirForm, 'events':events})
 
 def pdf(request, id):
     events = Event.objects.get(id=id)

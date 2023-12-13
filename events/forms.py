@@ -1,5 +1,5 @@
 from django import forms
-from events.models import Event, Recevoir
+from .models import Event, Recevoir
 
 
 

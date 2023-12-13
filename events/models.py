@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.core.exceptions import ValidationError
+
+
 
 from io import BytesIO
 
@@ -21,7 +24,12 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def clean(self, *args, **kwargs) :
+        return super(Event, self).clean(*args, **kwargs)
 
+        if self.event_date < datetime.datetime.now():
+            raise ValidationError("La date et l'heure ne doivent pas etre anterieur a la date d'aujourd'hui.")
 class Ticket(models.Model):
     qr_code = models.ImageField(upload_to="image/")
     name = models.CharField(max_length=200)
