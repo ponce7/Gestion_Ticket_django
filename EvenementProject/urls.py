@@ -15,11 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from accounts.views import signup, connexion, deconnexion
-from events.views import generateQrCode,index, add_event, commande, pdf
+from events.views import edit, show_event, delete, newsletter, subscribe, SearchResultsView, generateQrCode,index, add_event, commande, pdf
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 
 
@@ -28,11 +29,18 @@ urlpatterns = [
     path('accounts/login/', connexion, name="connexion"),
     path('accounts/logout/', deconnexion, name="deconnexion"),
     path('accounts/signup/', signup, name="signup"),
+    # path('modification/', modification, name="modification"),
     path('index/', index, name="index"),
-    path('event/', add_event, name="add_event"),
+    path('add_event/<int:id>/', add_event, name="add_event"),
+    path('show_event/<int:id>/', show_event, name="show_event"),
     path('pdf/', pdf, name="pdf"),
-    # path('event/<str:slug>/add-to-cart/', add_to_cart, name="add_to_cart"),
+    path('delete/<int:id>/supprimer/', delete, name="delete"),
+    # path('', HomePageView.as_view(), name="home"),
+    path('search/', SearchResultsView.as_view(), name="search_results"),
+    path("newsletter", newsletter, name="newsletter"),
     path('commande/<int:id>/', commande, name="commande"),
+    path('subscribe/', subscribe, name='subscribe'),
+    path('edit/<int:id>/', edit, name="show_edit"),
     # path('page_convert/<int:id>/', render_pdf_view, name='render_pdf_view')
     # path('home/', generateQrCode, name="home"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

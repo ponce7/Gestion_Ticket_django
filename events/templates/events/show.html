@@ -31,9 +31,9 @@
 <div class="container-fluid mt-5">
   
     <div class="row">
-        {% for event in eventListes %}
+        {% for event in events %}
 
-            {% if event.nbr_ticket > 0 %}
+         {% if event.nbr_ticket > 0 %}
                       
           <div class="col-sm-3 mb-3">
               <div  class="card card-cover h-100 overflow-hidden text-bg-white rounded-4 shadow-lg">
@@ -68,50 +68,24 @@
                         <small>{{ event.event_date }}</small>
                           
                         <p class="text-center"> 
-                            <a href="{% url 'commande' event.id %}" type="button" class="btn btn-primary px-2 text-uppercase">Passer la commande</a>
+                            {% comment %} <a href="{% url 'commande' event.id %}" type="button" class="btn btn-primary px-2 text-uppercase">Passer la commande</a> {% endcomment %}
                             {% if user.is_authenticated %}
-                            
-                              
-                              {% if id_user %}
-                                
                               <a href="/delete/{{event.id}}/supprimer/" type="button" class="btn btn-danger mt-2 px-2 text-uppercase">Supprimer</a>   
                               <a href="/edit/{{event.id}}/" type="button" class="btn btn-primary mt-2 px-2 text-uppercase">Modifier</a>
-          
-                              {% endif %}
-  
                             {% endif %}
-                            
                           </p>  
                       </p>
                     </div> 
                 </div>
               </div>
             </div>
+           
             {% endif %}
-        {% endfor %}  
-        <div class="pagination">
-          <span class="step-links">
-              {% if eventListes.has_previous %}
-                  <a href="?page=1">&laquo; first</a>
-                  <a href="?page={{ eventListes.previous_page_number }}">previous</a>
-              {% endif %}
-      
-              <span class="current">
-                  Page {{ eventListes.number }} of {{ eventListes.paginator.num_pages }}.
-              </span>
-      
-              {% if eventListes.has_next %}
-                  <a href="?page={{ eventListes.next_page_number }}">next</a>
-                  <a href="?page={{ eventListes.paginator.num_pages }}">last &raquo;</a>
-              {% endif %}
-          </span>
-      </div>
+            {% endfor %}  
             </div>
-
-            
-      
     </div>
   
+
 </div>
 
 

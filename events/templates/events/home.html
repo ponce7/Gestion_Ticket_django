@@ -7,14 +7,23 @@
 </head>
 <body>
     
-    <div class="ui container">
+   
         {% block content %}
-
-        <h1> {{name}} - {{obj.name}}</h1>
-        <img src={{img_str}}>
+            <h1>Home Page</h1>
+        
+        <form action="{% url 'search_results' %}" method="get">
+            <input name="q" type="text" placeholder="Search...">
+        </form>
         {% endblock content %}
-    </div>
 
+{% block scripts %}
+        {% comment %} <script>
+            const data = '{{qs_json}}'
+
+            console.log(data)
+        </script>
+    {% endcomment %}
+{% endblock scripts %}
   
 </body>
 </html>

@@ -27,7 +27,10 @@ def connexion(request):
         user = authenticate(request, username=username, password=password)
 
         if user:
+            logged_user = User.objects.get(username=username)
+            request.session['logged_user.id'] = logged_user.id
             login(request, user)
+
             return redirect("index")
     return render(request, 'accounts/login.html')
            

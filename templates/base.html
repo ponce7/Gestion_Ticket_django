@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+   
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
 
 
     
-        <script src="/docs/5.3/assets/js/color-modes.js"></script>
+    
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,87 +41,6 @@
     <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
     <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#712cf9">
-    
-    
-        {% comment %} <style>
-          .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-          }
-    
-          @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-              font-size: 3.5rem;
-            }
-          }
-    
-          .b-example-divider {
-            width: 100%;
-            height: 3rem;
-            background-color: rgba(0, 0, 0, .1);
-            border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-          }
-    
-          .b-example-vr {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 100vh;
-          }
-    
-          .bi {
-            vertical-align: -.125em;
-            fill: currentColor;
-          }
-    
-          .nav-scroller {
-            position: relative;
-            z-index: 2;
-            height: 2.75rem;
-            overflow-y: hidden;
-          }
-    
-          .nav-scroller .nav {
-            display: flex;
-            flex-wrap: nowrap;
-            padding-bottom: 1rem;
-            margin-top: -1px;
-            overflow-x: auto;
-            text-align: center;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-          }
-    
-          .btn-bd-primary {
-            --bd-violet-bg: #712cf9;
-            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-    
-            --bs-btn-font-weight: 600;
-            --bs-btn-color: var(--bs-white);
-            --bs-btn-bg: var(--bd-violet-bg);
-            --bs-btn-border-color: var(--bd-violet-bg);
-            --bs-btn-hover-color: var(--bs-white);
-            --bs-btn-hover-bg: #6528e0;
-            --bs-btn-hover-border-color: #6528e0;
-            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-            --bs-btn-active-color: var(--bs-btn-hover-color);
-            --bs-btn-active-bg: #5a23c8;
-            --bs-btn-active-border-color: #5a23c8;
-          }
-    
-          .bd-mode-toggle {
-            z-index: 1500;
-          }
-    
-          .bd-mode-toggle .dropdown-menu .active .bi {
-            display: block !important;
-          }
-        </style>
-     {% endcomment %}
         
         <!-- Custom styles for this template -->
         <link href="features.css" rel="stylesheet">
@@ -132,23 +51,26 @@
     <div class="container-fluid">
       <nav class="navbar bg-body-tertiary">
         <div class="container">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+          <form class="d-flex" role="search" action="{% url 'search_results' %}" method="get">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+            <button class="btn btn-outline-success" type="submit" >Search</button>
           </form>
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><span><a href="{% url 'index' %}" class="nav-link px-2 link-secondary"><i class="bi bi-house"></i>Home</a></span></li>
            <li>
             {% if user.is_authenticated %}
-                <a type="button" class="btn btn-primary text-uppercase" href="{% url 'add_event' %}">Add event</a>
-                <a type="button" class="btn btn-danger text-uppercase" href="{% url 'deconnexion' %}">Logout</a>
+                {% comment %} <a type="button" class="btn btn-white text-uppercase" href="{% url 'modification' %}">Modifier mes tickets</a> {% endcomment %}
+                <a type="button" class="btn btn-dark text-uppercase" href="/show_event/{{user.id}}/" style="text-decoration: none; margin:0px 15px 0px 15px;"><i class="bi bi-eye"></i>Voir mes tickets</a>
+                <a type="button" class="btn btn-dark text-uppercase" href="/add_event/{{user.id}}/" style="text-decoration: none; margin:0px 15px 0px 15px;"><i class="bi bi-plus-lg"></i>Ajouter un evenement</a>
+                <a type="button" class="btn btn-danger text-uppercase" href="{% url 'deconnexion' %}"><i class="bi bi-box-arrow-right"></i>Deconnecter</a>
+                
             {% endif %}
 
            </li>
            <li>
             {% if not user.is_authenticated%}
-                <a type="button" class="btn btn-primary text-uppercase" href="{% url 'signup' %}">Sign Up</a>
-                <a type="button" class="btn btn-primary text-uppercase" href="{% url 'connexion' %}">Log In</a>
+                <a type="button" class="btn btn-primary text-uppercase" style="margin-right: 15px;" href="{% url 'connexion' %}"><i class="bi bi-bag-fill"></i>Connexion</a>
+                <a type="button" class="btn btn-primary text-uppercase" href="{% url 'signup' %}">Inscription</a>
             {% endif %}
        
            </li>
@@ -163,8 +85,36 @@
 
     {% endblock %}
 
-    <footer id="footer" class="mt-4">
-      <p>copyright© 2023 tous droits reserves</p>
-    </footer>
+    {% block scripts %}
+         
+   
+    {% endblock scripts %}
+        
+
+  <footer id="footer" class="mt-4 container-fluid">
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <form class="form-inline mb-2" enctype="multipart/form-data" method="post" action="{% url 'subscribe' %}">
+          {% csrf_token %}
+            <div class="form-group mx-sm-3">
+              <h5>Enregistrez-vous dans la newsletter</h5>
+              <input type="email" name="email_field"  class="form-control" id="id_email_field" placeholder="example@gmail.com" required="" >
+            </div>
+            <div class="form-group mx-sm-3 mb-2 ">
+              <button type="submit" id="id_submit"  class="btn btn-primary mb-2 text-uppercase">Souscrire</button>
+            </div>
+        </form>
+      </div>
+      <p class="text-info">copyright© 2023 tous droits reserves</p>
+    </div>
+    
+  </footer>
+
+   
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
 </body>
 </html>
